@@ -1,4 +1,4 @@
-<!-- Layouts file for regular users -->
+<!-- Layouts file for admins -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -12,12 +12,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-    
-    <!-- Bootstrap CSS -->
+
+    <!-- Include any CSS or meta tags specific to your admin layout -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    
-     <!-- Styles -->
-     @vite(['resources/css/app.css'])
+
+    <!-- Styles -->
+    @vite(['resources/css/app.css'])
 
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
@@ -39,7 +39,7 @@
 
         <!-- Page Content -->
         <main>
-            @yield('content')
+        @yield('content')
         </main>
     </div>
 </body>
