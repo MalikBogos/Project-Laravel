@@ -1,21 +1,28 @@
 <?php
 
+// app/Http/Middleware/AdminMiddleware.php
+
 namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
 class AdminMiddleware
 {
-    public function handle($request, Closure $next)
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle(Request $request, Closure $next)
     {
-        // Check if the user is an admin
-        if (! $request->user() || ! $request->user()->isAdmin()) {
-            abort(403, 'Unauthorized action.');
+        if (Auth::check() && Auth::user()->is_admin) {
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect('/')->with('error', 'You do not have access to this page.');
     }
 }

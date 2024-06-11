@@ -10,9 +10,11 @@ use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/contact-messages', [ContactController::class, 'showMessages'])->name('admin.contact-messages');
-});
+Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.showForm');
+Route::post('/contact/submit', [ContactController::class, 'submitForm'])->name('contact.submit');
+
+
+Route::get('/admin/messages', [ContactController::class, 'showMessages'])->name('contact.messages');
 
 
 
@@ -44,9 +46,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
 
 
-
-Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
-Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
 
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
