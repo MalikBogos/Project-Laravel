@@ -2,37 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ContactMessage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
-    public function show()
+
+
+    public function showContactMessages()
+    {
+        $messages = ContactMessage::all();
+        return view('admin.contact_messages', compact('messages'));
+    }
+
+
+    public function showForm()
     {
         return view('contact');
     }
 
-    public function send(Request $request)
+    public function submitForm(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255',
+            'name' => 'required',
+            'email' => 'required|email',
             'message' => 'required',
         ]);
 
-        $contactData = [
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'message' => $request->input('message'),
-        ];
+        // Save the message to the database
+        $message = new ContactMessage();
+        $message->name = $request->name;
+        $message->email = $request->email;
+        $message->message = $request->message;
+        $message->save();
 
-        // Send email (replace 'your-email@example.com' with your email address)
-        Mail::send('emails.contact', $contactData, function ($message) use ($contactData) {
-            $message->to('your-email@example.com')
-                ->subject('Contact Form Submission from ' . $contactData['name']);
-        });
+        return redirect()->route('contact')->with('success', 'Your message has been submitted successfully.');
+    }
 
-        return redirect()->route('contact.show')->with('success', 'Your message has been sent successfully.');
+    public function showMessages()
+    {
+        $messages = ContactMessage::all();
+
+        return view('admin.contact_messages', ['messages' => $messages]);
     }
 }
-

@@ -7,17 +7,26 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqCategoryController;
 use App\Http\Controllers\FaqController;
-
-Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/faq/create', [FaqController::class, 'create'])->name('faq.create');
-    Route::post('/admin/faq/store', [FaqController::class, 'store'])->name('faq.store');
-    Route::get('/admin/faq/{faq}/edit', [FaqController::class, 'edit'])->name('faq.edit');
-    Route::put('/admin/faq/{faq}/update', [FaqController::class, 'update'])->name('faq.update');
-    Route::delete('/admin/faq/{faq}/destroy', [FaqController::class, 'destroy'])->name('faq.destroy');
+    Route::get('/admin/contact-messages', [ContactController::class, 'showMessages'])->name('admin.contact-messages');
 });
 
+
+
+// Public FAQ route
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+
+// Admin FAQ routes with 'auth' and 'admin' middleware
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/faq/create', [FaqController::class, 'create'])->name('faq.create');
+    Route::post('/faq/store', [FaqController::class, 'store'])->name('faq.store');
+    Route::get('/faq/{faq}/edit', [FaqController::class, 'edit'])->name('faq.edit');
+    Route::put('/faq/{faq}/update', [FaqController::class, 'update'])->name('faq.update');
+    Route::delete('/faq/{faq}/destroy', [FaqController::class, 'destroy'])->name('faq.destroy');
+});
 
 
 // // Public FAQ page
@@ -36,8 +45,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 
 
-Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
-Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
+Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
 
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {

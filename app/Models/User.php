@@ -50,4 +50,9 @@ class User extends Authenticatable
     {
         return $this->admin;
     }
+
+    public function isAdmin()
+{
+    return $this->admin; // Assuming 'admin' is a boolean attribute in your users table
+}
 }

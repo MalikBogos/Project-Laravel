@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Faq;
@@ -13,16 +12,10 @@ class FaqController extends Controller
     {
         $categories = FaqCategory::with('faqs')->get();
 
-        if (Auth::check() && Auth::user()->admin) {
+        if (Auth::check() && Auth::user()->isAdmin()) {
             return view('admin.faq', compact('categories'));
         }
 
-    return view('faq.index', compact('categories'));
-    }
-
-    public function publicIndex()
-    {
-        $categories = FaqCategory::all();
         return view('faq.index', compact('categories'));
     }
 
@@ -68,4 +61,3 @@ class FaqController extends Controller
         return redirect()->route('faq.index')->with('success', 'FAQ deleted successfully.');
     }
 }
-

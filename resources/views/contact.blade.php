@@ -1,4 +1,5 @@
 <!-- resources/views/contact.blade.php -->
+
 @extends('layouts.app')
 
 @section('content')
@@ -11,7 +12,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <form action="{{ route('contact.send') }}" method="POST">
+            <form action="{{ route('contact.submit') }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -30,5 +31,4 @@
         </div>
     </div>
 </div>
-
 @endsection
