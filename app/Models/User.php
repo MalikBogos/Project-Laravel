@@ -18,10 +18,15 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var array
      */
     protected $fillable = [
         'name',
+        'first_name',
+        'last_name',
+        'birthday',
+        'avatar',
+        'bio',
         'email',
         'password',
         'usertype',
@@ -30,7 +35,7 @@ class User extends Authenticatable
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+     * @var array
      */
     protected $hidden = [
         'password',
@@ -38,20 +43,21 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
-     * @return array<string, string>
+     * @var array
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 
+    /**
+     * Determine if the user is an admin.
+     *
+     * @return bool
+     */
     public function isAdmin()
     {
-        return $this->usertype === 'admin'; // Assuming 'admin' is a boolean attribute in your users table
+        return $this->usertype === 'admin';
     }
 }

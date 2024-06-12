@@ -8,6 +8,9 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqCategoryController;
 use App\Http\Controllers\HomeController;
 
+use App\Http\Controllers\AvatarController;
+
+
 use \App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Mail;
@@ -79,6 +82,9 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::post('/profile/avatar-upload', [AvatarController::class, 'upload'])->name('avatar.upload');
+Route::delete('/profile/avatar-reset', [AvatarController::class, 'reset'])->name('avatar.reset');
+
 });
 
 

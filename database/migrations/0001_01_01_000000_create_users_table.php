@@ -4,7 +4,6 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-// database/migrations/create_users_table
 return new class extends Migration
 {
     /**
@@ -14,13 +13,18 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique(); // Change 'name' to 'username' and make it unique
+            $table->string('first_name')->nullable(); // Add first name
+            $table->string('last_name')->nullable(); // Add last name
+            $table->date('birthday')->nullable(); // Add birthday
+            $table->string('avatar')->nullable()->default('avatars/default_avatar.png');; // Add avatar field
+            $table->text('bio')->nullable(); // Add bio field
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
             $table->string('usertype')->default('user'); 
+            $table->timestamps();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
