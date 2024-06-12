@@ -1,4 +1,4 @@
-<!-- resources/views/admin/posts/edit.blade.php -->
+<!-- resources/views/admin/edit-post.blade.php -->
 @extends('layouts.admin')
 
 @section('content')

@@ -1,3 +1,4 @@
+<!-- resources/views/admin/create-faq.blade.php -->
 @extends('layouts.admin')
 
 @section('content')

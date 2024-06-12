@@ -1,3 +1,4 @@
+<!-- resources/views/admin/manage-posts.blade.php -->
 @extends('layouts.admin')
 
 @section('content')
