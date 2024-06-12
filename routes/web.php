@@ -6,18 +6,24 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqCategoryController;
+use App\Http\Controllers\HomeController;
+
 use \App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Http\Kernel;
+use App\Http\Kernel;
+
+// example
+Route::get('/adminpage', [HomeController::class, 'page'])->name('admin.page')->middleware('admin');
+
 
 Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.showForm');
 Route::post('/contact/submit', [ContactController::class, 'submitForm'])->name('contact.submit');
 
 
 // needs admin auth middleware
-// Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/messages', [ContactController::class, 'showMessages'])->name('contact.messages');
 
     Route::get('/admin/edit-categories', [FaqCategoryController::class, 'index'])->name('faq.categories.index');
@@ -37,7 +43,7 @@ Route::post('/contact/submit', [ContactController::class, 'submitForm'])->name('
     Route::get('/faq/{faq}/edit', [FaqController::class, 'edit'])->name('faq.edit');
     Route::put('/faq/{faq}/update', [FaqController::class, 'update'])->name('faq.update');
     Route::delete('/faq/{faq}/destroy', [FaqController::class, 'destroy'])->name('faq.destroy');
-// });
+});
     
 
 // Public FAQ route
