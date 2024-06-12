@@ -8,7 +8,6 @@
         <a href="{{ route('faq.create') }}" class="btn btn-success mr-2">Create FAQ</a>
         <a href="{{ route('faq.categories.index') }}" class="btn btn-secondary">Manage Categories</a>
     </div>
-    <h1 class="text-white">FAQs</h1>
     @foreach($categories as $category)
         @foreach($category->faqs as $faq)
             <div class="card mb-3">

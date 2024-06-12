@@ -6,7 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,14 +26,16 @@
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        @auth
-            @if(Auth::user()->isAdmin())
+        <!-- @auth
+            @if(Auth::user()->admin)
                 @include('layouts.admin-navigation')
             @else
                 @include('layouts.navigation')
             @endif
-        @endauth
+        @endauth -->
 
+        @include('layouts.navigation')
+        
         <!-- Page Content -->
         <main>
             @yield('content')

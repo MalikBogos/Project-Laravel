@@ -7,6 +7,6 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function page() {
-      return view ('admin.faq');
+      return view ('adminpage');
     }
 }
