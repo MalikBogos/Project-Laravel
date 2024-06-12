@@ -9,6 +9,7 @@
                 <div class="card mb-3">
                     <div class="card-header">
                         <h5>{{ $faq->question }}</h5>
+                        <span class="badge badge-secondary">{{ $category->name }}</span>
                     </div>
                     <div class="card-body">
                         <p>{{ $faq->answer }}</p>

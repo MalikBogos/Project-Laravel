@@ -9,13 +9,8 @@ class FaqCategoryController extends Controller
 {
     public function index()
     {
-        $categories = FaqCategory::with('faqs')->get();
-        return view('faq.index', compact('categories'));
-    }
-
-    public function create()
-    {
-        return view('faq.categories.create');
+        $categories = FaqCategory::all();
+        return view('admin.edit-categories', compact('categories'));
     }
 
     public function store(Request $request)
@@ -23,11 +18,6 @@ class FaqCategoryController extends Controller
         $request->validate(['name' => 'required']);
         FaqCategory::create($request->all());
         return redirect()->route('faq.categories.index')->with('success', 'Category created successfully.');
-    }
-
-    public function edit(FaqCategory $category)
-    {
-        return view('faq.categories.edit', compact('category'));
     }
 
     public function update(Request $request, FaqCategory $category)

@@ -6,6 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Http\Kernel;
+use \App\Http\Middleware\AdminMiddleware;
+
 
 class User extends Authenticatable
 {
@@ -46,13 +49,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function getIsAdminAttribute()
-    {
-        return $this->admin;
-    }
-
     public function isAdmin()
-{
-    return $this->admin; // Assuming 'admin' is a boolean attribute in your users table
-}
+    {
+        return $this->is_admin; // Assuming 'admin' is a boolean attribute in your users table
+    }
 }

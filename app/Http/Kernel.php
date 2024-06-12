@@ -1,6 +1,7 @@
 <?php 
 
-namespace App\Http\Kernel;
+namespace App\Http;
+use \App\Http\Middleware\AdminMiddleware;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -41,7 +42,6 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        // Other middleware...
-        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'is_admin' => \App\Http\Middleware\AdminMiddleware::class,
     ];
 }
