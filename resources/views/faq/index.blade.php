@@ -1,8 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.user')
 
 @section('content')
 <div class="container mt-5">
-    <h1>FAQs</h1>
     @foreach($categories as $category)
         <div class="mt-4">
             @foreach($category->faqs as $faq)
