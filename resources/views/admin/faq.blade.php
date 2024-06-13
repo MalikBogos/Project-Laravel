@@ -14,7 +14,7 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div>
                         <h5>{{ $faq->question }}</h5>
-                        <span class="badge badge-secondary">{{ $category->name }}</span>
+                        <span class="badge bg-dark text-light">{{ $category->name }}</span> <!-- Added bg-dark and text-light classes for darker background and lighter text -->
                     </div>
                     <div>
                         <a href="{{ route('faq.edit', $faq->id) }}" class="btn btn-primary btn-sm mr-2">Edit</a>
@@ -33,4 +33,3 @@
     @endforeach
 </div>
 @endsection
-

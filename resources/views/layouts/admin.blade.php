@@ -26,13 +26,16 @@
 
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        @include('layouts.admin-navigation')
+<body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
+    <div class="min-vh-100 d-flex flex-column">
 
+    @include('layouts.admin-navigation')
+        
         <!-- Page Content -->
-        <main>
-            @yield('content')
+        <main class="flex-grow-1">
+            <div class="container mt-4">
+                @yield('content')
+            </div>
         </main>
     </div>
 </body>
