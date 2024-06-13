@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AvatarController;
 use \App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Http\Kernel;
@@ -31,6 +32,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/admin/edit-categories/{category}', [FaqCategoryController::class, 'update'])->name('faq.categories.update');
     Route::delete('/admin/edit-categories/{category}', [FaqCategoryController::class, 'destroy'])->name('faq.categories.destroy');
 
+    Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
+    Route::post('/admin/users/{user}/update-usertype', [UserController::class, 'updateUsertype'])->name('users.updateUsertype');
+
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
 
     Route::get('/posts', [AdminController::class, 'managePosts'])->name('admin.manage-posts');
@@ -43,6 +47,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/faq/{faq}/edit', [FaqController::class, 'edit'])->name('faq.edit');
     Route::put('/faq/{faq}/update', [FaqController::class, 'update'])->name('faq.update');
     Route::delete('/faq/{faq}/destroy', [FaqController::class, 'destroy'])->name('faq.destroy');
+
+    
 });
     
 
