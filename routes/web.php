@@ -7,10 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FaqCategoryController;
 use App\Http\Controllers\HomeController;
-
 use App\Http\Controllers\AvatarController;
-
-
 use \App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\FaqController;
 use Illuminate\Support\Facades\Mail;
@@ -49,22 +46,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
     
 
-// Public FAQ route
-    Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
-
-// // Admin routes for managing FAQs
-// Route::middleware(['auth', 'admin'])->group(function () {
-//     Route::delete('/faqs/{faq}', [FaqController::class, 'destroy'])->name('faqs.destroy');
-//     Route::resource('faq/categories', FaqCategoryController::class)->except(['index', 'show']);
-//     Route::resource('faq', FaqController::class)->except(['index', 'show']);
-// });
-
-// Route::get('/faq/{faq}/edit', [FaqController::class, 'edit'])->name('/admin/edit-faq');
-
-    
-
-
-
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 Route::resource('posts', PostController::class);
 
 Route::get('/create', function () {
