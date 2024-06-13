@@ -77,6 +77,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::get('/users/{user:name}', [ProfileController::class, 'show'])->name('user.profile');
+
 
 Route::middleware(['auth'])->group(function () {
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
