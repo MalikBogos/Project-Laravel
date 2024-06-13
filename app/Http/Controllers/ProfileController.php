@@ -1,5 +1,6 @@
 <?php
 
+// app/Http/Controllers/ProfileController.php
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -29,11 +30,12 @@ class ProfileController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:users,name,' . Auth::id(),
-            'first_name' => 'nullable|string|max:255',
-            'last_name' => 'nullable|string|max:255',
+            'first_name' => 'nullable|string|max:255|regex:/^[a-zA-Z]+$/',
+            'last_name' => 'nullable|string|max:255|regex:/^[a-zA-Z]+$/',
             'birthday' => 'nullable|date|before:2013-01-01',
             'bio' => 'nullable|string|max:1000',
             'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
+            
         ]);
 
         $user = Auth::user();
