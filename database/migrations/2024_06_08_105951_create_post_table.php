@@ -15,6 +15,7 @@ class CreatePostTable extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('cover_image')->nullable();
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }

@@ -11,6 +11,8 @@ use App\Http\Controllers\AvatarController;
 use \App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\UserController;
+use App\Http\Models\Comment;
+
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -38,8 +40,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
 
-    Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
-    Route::post('/posts/{postId}/comments', [PostController::class, 'storeComment'])->name('posts.storeComment');
     Route::delete('/posts/{id}', [AdminController::class, 'deletePost'])->name('admin.delete-post');
 
     Route::get('/faq/create', [FaqController::class, 'create'])->name('faq.create');
@@ -50,7 +50,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     
 });
-    
+
+Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
 
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
@@ -74,6 +75,8 @@ Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.up
 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 Route::post('/profile/avatar-upload', [AvatarController::class, 'upload'])->name('avatar.upload');
 Route::delete('/profile/avatar-reset', [AvatarController::class, 'reset'])->name('avatar.reset');
+Route::post('/posts/{postId}/comments', [PostController::class, 'storeComment'])->name('posts.storeComment');
+
 
 });
 
