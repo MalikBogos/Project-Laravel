@@ -12,11 +12,15 @@
                         </div>
                         <div class="card-body">
                             <p>{{ $post->content }}</p>
-                        @if ($post->cover_image && $post->cover_image != 'noimage.jpg')
-                        <div class="mt-3">
-                            <img src="{{ asset('storage/' . $post->cover_image) }}" alt="Cover Image" class="img-thumbnail" style="max-width: 300px;">
-                        </div>
-                        @endif
+                            @if ($post->cover_image && $post->cover_image != 'noimage.jpg')
+                                <div class="mt-3">
+                                    <img src="{{ asset('storage/cover_images/' . $post->cover_image) }}" alt="Cover Image" class="img-fluid rounded" style="max-width: 100%; height: auto;">
+
+                                </div>
+                            @endif
+
+
+
 
                         </div>
                         <div class="card-footer text-sm text-gray-600">

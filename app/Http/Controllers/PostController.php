@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -93,28 +94,48 @@ class PostController extends Controller
     }
 
 
+    public function destroyComment(Comment $comment)
+    {
+        // Ensure the authenticated user can delete the comment
+        if (auth()->user()->id !== $comment->user_id && !auth()->user()->isAdmin()) {
+            return redirect()->back()->with('error', 'Unauthorized action');
+        }
+
+        $comment->delete();
+
+        return redirect()->back()->with('success', 'Comment deleted successfully');
+    }
+
     public function destroy($id)
-{
-    $post = Post::findOrFail($id);
+    {
+        $post = Post::findOrFail($id);
 
-    // Check if the post has a cover image and delete it from storage
-    if ($post->cover_image && $post->cover_image !== 'noimage.jpg') {
-        Storage::delete('public/cover_images/' . $post->cover_image);
+        // Check if the authenticated user is authorized to delete the post
+        if (!Auth::user()->isAdmin() && Auth::id() !== $post->user_id) {
+            return redirect()->back()->with('error', 'Unauthorized action.');
+        }
+
+        // Default cover images that should not be deleted
+        $defaultImages = ['noimage.jpg', 'colomapark.png', 'history.png', 'events.png', 'restaurants.png'];
+
+        // Delete post's cover image from storage if it exists and is not a default image
+        if ($post->cover_image && !in_array($post->cover_image, $defaultImages)) {
+            Storage::delete('public/cover_images/' . $post->cover_image);
+        }
+
+        // Delete all comments associated with the post
+        $post->comments()->delete();
+
+        // Delete the post itself
+        $post->delete();
+
+        return redirect()->route('posts.index')->with('success', 'Post deleted');
     }
-
-    // Allow admins to delete any post or the author to delete their own post
-    if (auth()->user()->id !== $post->user_id && !auth()->user()->isAdmin()) {
-        return redirect('/posts')->with('error', 'Unauthorized action');
-    }
-
-    $post->delete();
-
-    return redirect('/posts')->with('success', 'Post deleted');
-}
 
     public function welcome()
-{
-    $posts = Post::inRandomOrder()->limit(3)->get(); // Fetch 3 random posts
-    return view('welcome', compact('posts'));
-}
+    {
+        $posts = Post::inRandomOrder()->limit(3)->get();
+
+        return view('welcome', compact('posts'));
+    }
 }

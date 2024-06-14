@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\News;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
@@ -82,7 +83,14 @@ class NewsController extends Controller
     public function destroy($id)
     {
         $news = News::findOrFail($id);
+
+        // Delete cover image from storage
+        if ($news->cover_image && $news->cover_image !== 'noimage.jpg') {
+            Storage::delete('public/cover_images/' . $news->cover_image);
+        }
+
         $news->delete();
+
         return redirect()->route('news.index')->with('success', 'News deleted successfully!');
     }
 }

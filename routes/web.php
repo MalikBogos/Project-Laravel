@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Kernel;
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\NewsController;
 
 // needs admin auth middleware
@@ -45,6 +46,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/news/{id}', [NewsController::class, 'update'])->name('news.update');
     Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
 
+
+
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -57,6 +60,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
     Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+        Route::delete('comments/{comment}', [PostController::class, 'destroyComment'])->name('comments.destroy');
+
 });
 
 Route::get('/news', [NewsController::class, 'index'])->name('news.index');
@@ -67,6 +72,7 @@ Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 Route::get('/', [PostController::class, 'welcome'])->name('welcome');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 Route::get('/users/{user:name}', [ProfileController::class, 'show'])->name('user.profile');
 

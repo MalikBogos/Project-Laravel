@@ -71,6 +71,7 @@
 
     <footer class="bg-gray-800 text-white mt-10 p-6 text-center">
         <p>&copy; 2024 Sint-Pieters-Leeuw. All rights reserved.</p>
+        <a href="{{ url('/about') }}" class="text-white hover:underline">About</a>
     </footer>
 
     <script src="{{ asset('js/scripts.js') }}"></script>
