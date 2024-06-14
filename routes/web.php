@@ -38,8 +38,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
 
-    Route::get('/posts/{id}/edit', [AdminController::class, 'editPost'])->name('admin.edit-post');
-    Route::post('/posts/{id}/edit', [AdminController::class, 'updatePost'])->name('admin.update-post');
+    Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
+    Route::post('/posts/{postId}/comments', [PostController::class, 'storeComment'])->name('posts.storeComment');
     Route::delete('/posts/{id}', [AdminController::class, 'deletePost'])->name('admin.delete-post');
 
     Route::get('/faq/create', [FaqController::class, 'create'])->name('faq.create');

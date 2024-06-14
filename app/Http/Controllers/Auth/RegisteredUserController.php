@@ -31,12 +31,13 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:32'],
-            'first_name' => ['nullable', 'string', 'max:255', 'regex:/^[a-zA-Z]+$/'],
-            'last_name' => ['nullable', 'string', 'max:255', 'regex:/^[a-zA-Z]+$/'],
+            'first_name' => ['nullable', 'string', 'max:30', 'regex:/^[a-zA-Z]+$/'],
+            'last_name' => ['nullable', 'string', 'max:30', 'regex:/^[a-zA-Z]+$/'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'birthday' => ['nullable', 'date', 'before_or_equal:' . now()->subYears(10)->format('Y-m-d')],
+            'birthday' => ['nullable', 'date', 'before:2013-01-01'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+        
 
         $user = User::create([
             'name' => $request->name,

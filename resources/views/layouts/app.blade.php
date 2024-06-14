@@ -27,8 +27,12 @@
 
 <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
     <div class="min-vh-100 d-flex flex-column">
-
-        @include('layouts.navigation')
+        
+        @if(auth()->check() && auth()->user()->isAdmin())
+            @include('layouts.admin-navigation')
+        @else
+            @include('layouts.navigation')
+        @endif
         
         <!-- Page Content -->
         <main class="flex-grow-1">

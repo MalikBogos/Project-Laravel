@@ -12,8 +12,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        // Retrieve all posts from the database
-        $posts = Post::all();
+        // Retrieve all posts with user information
+        $posts = Post::with('user')->get();
 
         // Return the view and pass the posts variable
         return view('posts.index', compact('posts'));
@@ -31,98 +31,65 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'cover_image' => 'image|nullable|max:1999'
-        ]);
+{
+    $request->validate([
+        'title' => 'required',
+        'content' => 'required',
+        'cover_image' => 'image|nullable|max:1999'
+    ]);
 
-        if ($request->hasFile('cover_image')) {
-            $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('cover_image')->getClientOriginalExtension();
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
-        } else {
-            $fileNameToStore = 'noimage.jpg';
-        }
+    $fileNameToStore = 'noimage.jpg'; // Initialize with a default value
 
-        $post = new Post;
-        $post->user_id = auth()->user()->id;
-        $post->title = $request->input('title');
-        $post->content = $request->input('content');
-        $post->cover_image = $fileNameToStore;
-        $post->save();
-
-        return redirect('/posts')->with('success', 'Post Created');
-
+    if ($request->hasFile('cover_image')) {
+        $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = $request->file('cover_image')->getClientOriginalExtension();
+        $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
     }
 
-    /**
+    $post = new Post;
+    $post->user_id = auth()->user()->id;
+    $post->title = $request->input('title');
+    $post->content = $request->input('content');
+    $post->cover_image = $fileNameToStore; // Assign the value here
+    $post->save();
+
+    return redirect('/posts')->with('success', 'Post Created');
+}
+
+
+ /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        $post = Post::find($id);
+        // Retrieve the post along with its comments and related user
+        $post = Post::with(['comments.user', 'user'])->findOrFail($id);
+
+        // Return the view and pass the post variable
         return view('posts.show', compact('post'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Store a newly created comment.
      */
-    public function edit(string $id)
-    {
-        $post = Post::find($id);
-        return view('posts.edit', compact('post'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function storeComment(Request $request, $postId)
     {
         $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'cover_image' => 'image|nullable|max:1999'
+            'comment' => 'required',
         ]);
 
-        if ($request->hasFile('cover_image')) {
-            $filenameWithExt = $request->file('cover_image')->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('cover_image')->getClientOriginalExtension();
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            $path = $request->file('cover_image')->storeAs('public/cover_images', $fileNameToStore);
-        } else {
-            $fileNameToStore = 'noimage.jpg';
-        }
+        $comment = new Comment;
+        $comment->user_id = auth()->user()->id;
+        $comment->post_id = $postId;
+        $comment->content = $request->input('comment');
+        $comment->save();
 
-        $post = Post::find($id);
-        $post->title = $request->input('title');
-        $post->content = $request->input('content');
-        if ($request->hasFile('cover_image')) {
-            $post->cover_image = $fileNameToStore;
-        }
-        $post->save();
-
-        return redirect('/posts')->with('success', 'Post Updated');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        $post = Post::find($id);
-        if ($post->cover_image != 'noimage.jpg') {
-            Storage::delete('public/cover_images/'.$post->cover_image);
-        }
-        $post->delete();
-        return redirect('/posts')->with('success', 'Post Removed');
+        return back()->with('success', 'Comment added.');
     }
 
 
-    // Restricts actions to authenticated users
-    
+    // Other methods like show, edit, update, destroy...
+
 }

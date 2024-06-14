@@ -1,25 +1,61 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto mt-5">
-    <div class="flex justify-center">
-        <div class="w-full max-w-2xl">
-            <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg">
-                <div class="bg-blue-500 text-white p-4 rounded-t-lg">
-                    <h1 class="text-xl font-semibold">{{ $post->title }}</h1>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="card-title font-bold text-xl">{{ $post->title }}</h2>
                 </div>
-                <div class="p-6">
-                    <p class="text-gray-700 dark:text-gray-300">{{ $post->content }}</p>
+                <div class="card-body">
+                    <p>{{ $post->content }}</p>
+                    @if ($post->cover_image)
+                    <div class="mt-3">
+                        <img src="{{ asset('storage/cover_images/' . $post->cover_image) }}" alt="Cover Image" class="img-thumbnail" style="max-width: 300px;">
+                    </div>
+                    @endif
                 </div>
-                @if($post->cover_image)
-                <div class="p-6">
-                    <img src="{{ asset('storage/' . $post->cover_image) }}" alt="Cover Image" class="w-full h-auto rounded">
-                </div>
-                @endif
-                <div class="bg-gray-100 dark:bg-gray-900 text-gray-500 dark:text-gray-400 p-4 rounded-b-lg">
-                    <small>Published on {{ $post->created_at->format('F j, Y') }}</small>
+                <div class="card-footer text-sm text-gray-600">
+                    <p><strong>Published By:</strong> {{ $post->user->name }}</p>
+                    <p><strong>Published Date:</strong> {{ $post->created_at->format('F j, Y') }}</p>
                 </div>
             </div>
+
+            <!-- Display Comments -->
+            <div class="mt-4">
+                <h3 class="text-xl font-bold">Comments</h3>
+                @if (count($post->comments) > 0)
+                    @foreach ($post->comments as $comment)
+                        <div class="card mt-3">
+                            <div class="card-header bg-gray-200">
+                                <p class="text-sm text-gray-600"><strong>{{ $comment->user->name }}</strong> commented</p>
+                            </div>
+                            <div class="card-body">
+                                <p>{{ $comment->content }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <p>No comments yet.</p>
+                @endif
+            </div>
+
+            <!-- Add Comment Form -->
+            @auth
+            <div class="mt-4">
+                <h3 class="text-xl font-bold">Add Comment</h3>
+                <form action="{{ route('posts.storeComment', $post->id) }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Write your comment here..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Comment</button>
+                </form>
+            </div>
+            @else
+            <p class="mt-4"><a href="{{ route('login') }}">Log in</a> to add comments.</p>
+            @endauth
         </div>
     </div>
 </div>

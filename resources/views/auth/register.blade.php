@@ -47,7 +47,7 @@
         <!-- Birthday -->
         <div class="mt-4">
             <x-input-label for="birthday" :value="__('Birthday')" />
-            <x-text-input id="birthday" class="block mt-1 w-full" type="date" name="birthday" :value="old('birthday')" />
+            <x-text-input id="birthday" class="block mt-1 w-full" type="date" name="birthday" :value="old('birthday')" max="2012-12-31" />
             <x-input-error :messages="$errors->get('birthday')" class="mt-2" />
         </div>
 
@@ -56,7 +56,7 @@
                 {{ __('Already registered?') }}
             </a>
 
-            <x-primary-button class="ml-4">
+            <x-primary-button class="ml-3" style="background-color: #0d1217; color: white;">
                 {{ __('Register') }}
             </x-primary-button>
         </div>

@@ -20,9 +20,9 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:users,name,' . Auth::id(),
-            'first_name' => 'nullable|string|max:255',
-            'last_name' => 'nullable|string|max:255',
+            'name' => 'required|string|max:32|unique:users,name,' . Auth::id(),
+            'first_name' => 'nullable|string|max:30',
+            'last_name' => 'nullable|string|max:30',
             'birthday' => 'nullable|date|before:2013-01-01',
             'bio' => 'nullable|string|max:1000',
             'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),

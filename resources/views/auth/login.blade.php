@@ -15,19 +15,18 @@
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
-
             <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
+                          type="password"
+                          name="password"
+                          required autocomplete="current-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Forgot Password -->
         <div class="mt-2">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+                <a class="underline text-sm text-blue-800 hover:text-blue-600 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700"
+                   href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
@@ -36,21 +35,21 @@
         <!-- Remember Me -->
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
+                <input id="remember_me" type="checkbox" class="rounded bg-gray-300 border-gray-400 text-blue-800 shadow-sm focus:ring-blue-700"
+                       name="remember">
+                <span class="ml-2 text-sm text-blue-800">{{ __('Remember me') }}</span>
             </label>
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <x-primary-button class="ms-3">
+            <x-primary-button class="ml-3" style="background-color: #0d1217; color: white;">
                 {{ __('Log in') }}
             </x-primary-button>
 
-            <x-primary-button class="ms-3" style="background-color: #6c757d;">
-                <a class="text-white" href="{{ route('register') }}">
-                    {{ __('Register') }}
-                </a>
-            </x-primary-button>
+            <!-- Register Button -->
+            <button type="button" onclick="window.location='{{ route('register') }}'" class="ml-3 inline-flex items-center justify-center px-4 py-1 border border-transparent rounded-md font-semibold text-white bg-gray-800 hover:bg-gray-700 focus:outline-none">
+                {{ __('Register') }}
+            </button>
         </div>
     </form>
 </x-guest-layout>
