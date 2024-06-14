@@ -42,4 +42,19 @@
         </main>
     </div>
 </body>
+
+<script>
+
+function toggleTheme() {
+    const html = document.documentElement;
+    if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('color-theme', 'light');
+    } else {
+        html.classList.add('dark');
+        localStorage.setItem('color-theme', 'dark');
+    }
+}
+
+</script>
 </html>

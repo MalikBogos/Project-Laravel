@@ -10,14 +10,14 @@
                 </div>
                 <div class="card-body">
                     <p>{{ $post->content }}</p>
-                    @if ($post->cover_image)
-                    <div class="mt-3">
-                        <img src="{{ asset('storage/cover_images/' . $post->cover_image) }}" alt="Cover Image" class="img-thumbnail" style="max-width: 300px;">
-                    </div>
+                    @if ($post->cover_image && $post->cover_image != 'noimage.jpg')
+                        <div class="mt-3">
+                            <img src="{{ asset('storage/cover_images/' . $post->cover_image) }}" alt="Cover Image" class="img-thumbnail" style="max-width: 300px;">
+                        </div>
                     @endif
                 </div>
                 <div class="card-footer text-sm text-gray-600">
-                    <p><strong>Published By:</strong> {{ $post->user->name }}</p>
+                    <p><strong>Published By:</strong> <a href="{{ route('user.profile', ['user' => $post->user->name]) }}">{{ $post->user->name }}</a></p>
                     <p><strong>Published Date:</strong> {{ $post->created_at->format('F j, Y') }}</p>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                     @foreach ($post->comments as $comment)
                         <div class="card mt-3">
                             <div class="card-header bg-gray-200">
-                                <p class="text-sm text-gray-600"><strong>{{ $comment->user->name }}</strong> commented</p>
+                                <p class="text-sm text-gray-600"><strong><a href="{{ route('user.profile', ['user' => $comment->user->name]) }}">{{ $comment->user->name }}</a></strong> commented on {{ $comment->created_at->format('F j, Y \a\t g:i A') }}</p>
                             </div>
                             <div class="card-body">
                                 <p>{{ $comment->content }}</p>

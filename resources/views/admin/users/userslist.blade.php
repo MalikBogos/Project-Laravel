@@ -15,7 +15,13 @@
         </div>
     @endif
 
-    <h2 class="mb-4">User List</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>User List</h2>
+        @if (auth()->user()->usertype === 'admin')
+            <a href="{{ route('users.create') }}" class="btn btn-primary">Create User</a>
+        @endif
+    </div>
+
     <div class="table-responsive">
         <table class="table table-striped table-bordered">
             <thead class="table-dark">
@@ -55,6 +61,11 @@
                                         </select>
                                         <button type="submit" class="btn btn-primary btn-sm btn-block py-2">Update</button>
                                     </div>
+                                </form>
+                                <form action="{{ route('users.destroy', $user) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm btn-block py-2 mt-2" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
                                 </form>
                             @else
                                 <span class="text-muted">Cannot change</span>

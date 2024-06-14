@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('first_name')->nullable(); // Add first name
             $table->string('last_name')->nullable(); // Add last name
             $table->date('birthday')->nullable(); // Add birthday
-            $table->string('avatar')->nullable()->default('avatars/default_avatar.png');; // Add avatar field
+            $table->string('avatar')->nullable()->default('avatars/default_avatar.png'); // Add avatar field
             $table->text('bio')->nullable(); // Add bio field
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

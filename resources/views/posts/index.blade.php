@@ -1,4 +1,3 @@
-<!-- resources/views/posts/index.blade.php -->
 @extends('layouts.app')
 
 @section('content')
@@ -20,8 +19,9 @@
                             @endif
                         </div>
                         <div class="card-footer text-sm text-gray-600">
-                            <p><strong>Published By:</strong> {{ $post->user->name }}</p>
-                            <p><strong>Published Date:</strong> {{ $post->created_at->format('F j, Y') }}</p>
+                            <p><strong>Published By:</strong> <a href="{{ route('user.profile', ['user' => $post->user->name]) }}">{{ $post->user->name }}</a></p>
+                            <p><strong>Published Date:</strong> {{ $post->created_at->format('F j, Y \a\t g:i A') }}</p>
+                            <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary mt-2">View Post</a>
                         </div>
                     </div>
                 @endforeach
