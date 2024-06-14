@@ -12,6 +12,7 @@ use \App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Kernel;
 
@@ -37,7 +38,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
 
-    Route::get('/posts', [AdminController::class, 'managePosts'])->name('admin.manage-posts');
     Route::get('/posts/{id}/edit', [AdminController::class, 'editPost'])->name('admin.edit-post');
     Route::post('/posts/{id}/edit', [AdminController::class, 'updatePost'])->name('admin.update-post');
     Route::delete('/posts/{id}', [AdminController::class, 'deletePost'])->name('admin.delete-post');
@@ -53,13 +53,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     
 
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
+
+
 Route::resource('posts', PostController::class);
 
-Route::get('/create', function () {
-    return view('posts.create');
-})->middleware(['auth', 'verified'])->name('posts.create');
 
-Route::get('/posts', [PostController::class, 'index'])->middleware(['auth', 'verified'])->name('posts.index');
+Route::get('/create', [PostController::class, 'create'])->middleware(['auth', 'verified'])->name('posts.create');
+
 
 Route::get('/', function () {
     return view('welcome');

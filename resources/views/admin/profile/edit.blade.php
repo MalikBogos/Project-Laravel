@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('header')
     <header class="dark:bg-gray-800 shadow">
