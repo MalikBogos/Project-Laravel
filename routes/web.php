@@ -12,15 +12,11 @@ use \App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\UserController;
 use App\Http\Models\Comment;
-
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Kernel;
-
-Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.showForm');
-Route::post('/contact/submit', [ContactController::class, 'submitForm'])->name('contact.submit');
-
+use App\Http\Controllers\NewsController;
 
 // needs admin auth middleware
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -42,6 +38,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/faq/{faq}/edit', [FaqController::class, 'edit'])->name('faq.edit');
     Route::put('/faq/{faq}/update', [FaqController::class, 'update'])->name('faq.update');
     Route::delete('/faq/{faq}/destroy', [FaqController::class, 'destroy'])->name('faq.destroy');
+
+    Route::get('/news/create', [NewsController::class, 'create'])->name('news.create');
+    Route::post('/news', [NewsController::class, 'store'])->name('news.store');
+    Route::get('/news/{id}/edit', [NewsController::class, 'edit'])->name('news.edit');
+    Route::put('/news/{id}', [NewsController::class, 'update'])->name('news.update');
+    Route::delete('/news/{id}', [NewsController::class, 'destroy'])->name('news.destroy');
+
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -51,20 +54,21 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/avatar-upload', [AvatarController::class, 'upload'])->name('avatar.upload');
     Route::delete('/profile/avatar-reset', [AvatarController::class, 'reset'])->name('avatar.reset');
     Route::post('/posts/{postId}/comments', [PostController::class, 'storeComment'])->name('posts.storeComment');  
-    Route::resource('posts', PostController::class);
-  
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
 
-
-
-
+Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+Route::get('/news/{id}', [NewsController::class, 'show'])->name('news.show');
+Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.showForm');
+Route::post('/contact/submit', [ContactController::class, 'submitForm'])->name('contact.submit');
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
-Route::resource('posts', PostController::class);
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
-
 Route::get('/users/{user:name}', [ProfileController::class, 'show'])->name('user.profile');
 
 

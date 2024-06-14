@@ -92,6 +92,17 @@ class PostController extends Controller
     }
 
 
-    // Other methods like show, edit, update, destroy...
+    public function destroy($id)
+    {
+        $post = Post::findOrFail($id);
 
+        // Allow admins to delete any post or the author to delete their own post
+        if (auth()->user()->id !== $post->user_id && !auth()->user()->isAdmin()) {
+            return redirect('/posts')->with('error', 'Unauthorized action');
+        }
+
+        $post->delete();
+
+        return redirect('/posts')->with('success', 'Post deleted');
+    }
 }

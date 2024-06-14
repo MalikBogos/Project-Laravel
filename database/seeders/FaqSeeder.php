@@ -12,10 +12,12 @@ class FaqSeeder extends Seeder
     public function run()
     {
         $category = FaqCategory::create(['name' => 'General Questions']);
+        $naturecategory = FaqCategory::create(['name' => 'Nature']);
+
         
         Faq::create([
             'question' => 'What is this site about?',
-            'answer' => 'This site allows users to post pictures and make posts for the city.',
+            'answer' => 'This site allows users to post pictures and make posts for the city Sint-Pieters-Leeuw.',
             'category_id' => $category->id,
         ]);
 
@@ -27,13 +29,13 @@ class FaqSeeder extends Seeder
 
         Faq::create([
             'question' => 'How can I submit a post to the blog?',
-            'answer' => 'To submit a post to the blog, simply navigate to the "Submit Post" page from the menu, fill out the required fields including title, content, and optionally an image, and then click the submit button.',
+            'answer' => 'To submit a post to the blog, simply navigate to the "Create" page from the menu, fill out the required fields including title, content, and optionally an image, and then click the submit button.',
             'category_id' => $category->id,
         ]);
 
         Faq::create([
             'question' => 'Can I submit multiple pictures with my post?',
-            'answer' => 'Yes, you can submit multiple pictures with your post. Simply click on the "Add Image" button when creating your post and select the images you want to include.',
+            'answer' => 'Unfortunately, this has not been made possible yet. We are striving to improve the site and hope the feature will be added as soon as possible.',
             'category_id' => $category->id,
         ]);
 
@@ -45,25 +47,21 @@ class FaqSeeder extends Seeder
 
         Faq::create([
             'question' => 'How long does it take for my post to appear on the blog?',
-            'answer' => 'Once you submit your post, it will undergo a review process by our moderators. This usually takes a few hours, but may vary depending on the volume of submissions. Once approved, your post will appear on the blog.',
+            'answer' => 'Once you submit your post, it will immediately be made visible.',
             'category_id' => $category->id,
         ]);
 
         Faq::create([
             'question' => "Can I edit or delete my post after it's been submitted?",
-            'answer' => "Yes, you can edit or delete your post after it's been submitted. Simply navigate to the 'My Posts' section of your account dashboard, locate the post you want to edit or delete, and use the provided options.",
+            'answer' => "Yes, you can edit or delete your post after it's been submitted. Simply locate the post you want to edit or delete, and use the provided options.",
             'category_id' => $category->id,
         ]);
 
-        Faq::create([
-            'question' => "How can I report a post that violates the community guidelines?",
-            'answer' => 'If you come across a post that you believe violates our community guidelines, please use the "Report Post" button located on the post itself. Our moderators will review the reported post and take appropriate action.',
-            'category_id' => $category->id,
-        ]);
+        
 
         Faq::create([
             'question' => "Can I share my post on social media?",
-            'answer' => ' Yes, you can easily share your post on social media platforms such as Facebook, Twitter, and Instagram. Simply use the provided share buttons located on the post page.',
+            'answer' => ' Yes, you can easily share your post on social media platforms such as Facebook, Twitter, and Instagram. Simply copy the url and share it.',
             'category_id' => $category->id,
         ]);
 
@@ -71,6 +69,12 @@ class FaqSeeder extends Seeder
             'question' => "Are there any opportunities to collaborate or contribute to the blog?",
             'answer' => "We're always open to collaboration and contributions from members of the community. If you have ideas for collaboration or would like to contribute content to the blog, please reach out to us through the contact form on our website.",
             'category_id' => $category->id,
+        ]);
+
+        Faq::create([
+            'question' => "Can i post pictures of my garden?",
+            'answer' => "Of course! We encourage all of our users to post whatever they want, as long as the post stays appropriate and fits the category",
+            'category_id' => $naturecategory->id,
         ]);
     }
 }

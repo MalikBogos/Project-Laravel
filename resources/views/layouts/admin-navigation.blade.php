@@ -3,6 +3,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
+                
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('welcome') }}">
@@ -10,40 +11,29 @@
                     </a>
                 </div>
 
+                <!-- Navigation links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
                         {{ __('Profile') }}
                     </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
-                    {{ __('Posts') }}
-                </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create')">
-                    {{ __('Create') }}
-                </x-nav-link>
-                </div>
-                
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.index')">
-                    {{ __('FAQ') }}
-                </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('contact.messages')" :active="request()->routeIs('contact.messages')">
-                    {{ __('Messages') }}
-                </x-nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                <x-nav-link :href="route('users.index')" :active="request()->routeIs('contact.messages')">
-                    {{ __('Users') }}
-                </x-nav-link>
+                    <x-nav-link :href="route('news.index')" :active="request()->routeIs('news.index')">
+                        {{ __('News') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
+                        {{ __('Posts') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('posts.create')" :active="request()->routeIs('posts.create')">
+                        {{ __('Create') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('faq.index')" :active="request()->routeIs('faq.index')">
+                        {{ __('FAQ') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('contact.messages')" :active="request()->routeIs('contact.messages')">
+                        {{ __('Messages') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('users.index')" :active="request()->routeIs('contact.messages')">
+                        {{ __('Users') }}
+                    </x-nav-link>
                 </div>
             </div>
 

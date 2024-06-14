@@ -21,7 +21,16 @@
                         <div class="card-footer text-sm text-gray-600">
                             <p><strong>Published By:</strong> <a href="{{ route('user.profile', ['user' => $post->user->name]) }}">{{ $post->user->name }}</a></p>
                             <p><strong>Published Date:</strong> {{ $post->created_at->format('F j, Y \a\t g:i A') }}</p>
-                            <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary mt-2">View Post</a>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary mt-2">View Post</a>
+                                @if(auth()->check() && (auth()->user()->id == $post->user_id || auth()->user()->isAdmin()))
+                                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger mt-2">Delete Post</button>
+                                    </form>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 @endforeach
