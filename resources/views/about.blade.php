@@ -35,6 +35,9 @@
     <main class="container mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
         <section class="text-center">
           <h2 class="text-4xl font-bold text-gray-800 mb-4">List of sources</h2>
+
+          <h2 class="text-4xl font-bold text-gray-800 mb-4 hover:underline">
+            <a href="https://github.com/MalikBogos/Project-Laravel">https://github.com/MalikBogos/Project-Laravel</h2>
           <p class="text-gray-600 mb-8"><a href="https://chatgpt.com/" class="text-blue-500 hover:underline">https://chatgpt.com/</a></p>
 <p class="text-gray-600 mb-8"><a href="https://www.phind.com/search?home=true" class="text-blue-500 hover:underline">https://www.phind.com/search?home=true</a></p>
 <p class="text-gray-600 mb-8"><a href="https://www.youtube.com/watch?v=HmqIqRYgnO4" class="text-blue-500 hover:underline">https://www.youtube.com/watch?v=HmqIqRYgnO4</a></p>
