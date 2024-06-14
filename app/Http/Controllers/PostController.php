@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Storage;
+
 
 
 class PostController extends Controller
@@ -92,18 +94,23 @@ class PostController extends Controller
 
 
     public function destroy($id)
-    {
-        $post = Post::findOrFail($id);
+{
+    $post = Post::findOrFail($id);
 
-        // Allow admins to delete any post or the author to delete their own post
-        if (auth()->user()->id !== $post->user_id && !auth()->user()->isAdmin()) {
-            return redirect('/posts')->with('error', 'Unauthorized action');
-        }
-
-        $post->delete();
-
-        return redirect('/posts')->with('success', 'Post deleted');
+    // Check if the post has a cover image and delete it from storage
+    if ($post->cover_image && $post->cover_image !== 'noimage.jpg') {
+        Storage::delete('public/cover_images/' . $post->cover_image);
     }
+
+    // Allow admins to delete any post or the author to delete their own post
+    if (auth()->user()->id !== $post->user_id && !auth()->user()->isAdmin()) {
+        return redirect('/posts')->with('error', 'Unauthorized action');
+    }
+
+    $post->delete();
+
+    return redirect('/posts')->with('success', 'Post deleted');
+}
 
     public function welcome()
 {

@@ -12,9 +12,9 @@
                     <p>{{ $post->content }}</p>
                     @if ($post->cover_image && $post->cover_image != 'noimage.jpg')
                         <div class="mt-3">
-                            <img src="{{ asset('storage/cover_images/' . $post->cover_image) }}" alt="Cover Image" class="img-thumbnail" style="max-width: 300px;">
+                            <img src="{{ asset('storage/' . $post->cover_image) }}" alt="Cover Image" class="img-thumbnail" style="max-width: 300px;">
                         </div>
-                    @endif
+                        @endif
                 </div>
                 <div class="card-footer text-sm text-gray-600">
                     <p><strong>Published By:</strong> <a href="{{ route('user.profile', ['user' => $post->user->name]) }}">{{ $post->user->name }}</a></p>
