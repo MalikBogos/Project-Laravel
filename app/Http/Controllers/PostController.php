@@ -13,13 +13,12 @@ class PostController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        // Retrieve all posts with user information
-        $posts = Post::with('user')->get();
+{
+    $posts = Post::with('user')->get(); // Fetch posts with user information
+    return view('posts.index', compact('posts')); // Pass $posts to the view
+}
 
-        // Return the view and pass the posts variable
-        return view('posts.index', compact('posts'));
-    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -105,4 +104,10 @@ class PostController extends Controller
 
         return redirect('/posts')->with('success', 'Post deleted');
     }
+
+    public function welcome()
+{
+    $posts = Post::inRandomOrder()->limit(3)->get(); // Fetch 3 random posts
+    return view('welcome', compact('posts'));
+}
 }

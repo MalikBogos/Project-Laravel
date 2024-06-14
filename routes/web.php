@@ -66,9 +66,8 @@ Route::post('/contact/submit', [ContactController::class, 'submitForm'])->name('
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', [PostController::class, 'welcome'])->name('welcome');
+
 Route::get('/users/{user:name}', [ProfileController::class, 'show'])->name('user.profile');
 
 

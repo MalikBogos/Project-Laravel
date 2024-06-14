@@ -58,22 +58,13 @@
         <section id="latest-posts" class="mt-10">
             <h3 class="text-2xl font-bold text-gray-800 mb-4">Latest Posts</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <article class="bg-gray-100 p-4 rounded-md shadow-md">
-                    <h4 class="text-xl font-bold text-gray-800">Post Title 1</h4>
-                    <p class="text-gray-600 mt-2">Brief description of the blog post...</p>
-                    <a href="#" class="text-red-500 hover:underline">Read more</a>
-                </article>
-                <article class="bg-gray-100 p-4 rounded-md shadow-md">
-                    <h4 class="text-xl font-bold text-gray-800">Post Title 2</h4>
-                    <p class="text-gray-600 mt-2">Brief description of the blog post...</p>
-                    <a href="#" class="text-red-500 hover:underline">
-                    Read more</a>
-                </article>
-                <article class="bg-gray-100 p-4 rounded-md shadow-md">
-                    <h4 class="text-xl font-bold text-gray-800">Post Title 3</h4>
-                    <p class="text-gray-600 mt-2">Brief description of the blog post...</p>
-                    <a href="#" class="text-red-500 hover:underline">Read more</a>
-                </article>
+                @foreach ($posts as $post)
+                    <article class="bg-gray-100 p-4 rounded-md shadow-md">
+                        <h4 class="text-xl font-bold text-gray-800">{{ $post->title }}</h4>
+                        <p class="text-gray-600 mt-2">{{ Str::limit(strip_tags($post->content), 120) }}</p>
+                        <a href="{{ route('posts.show', $post->id) }}" class="text-red-500 hover:underline">Read more</a>
+                    </article>
+                @endforeach
             </div>
         </section>
     </main>
